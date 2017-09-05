@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/bootstrap.css' />
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+
+    <%- include('header') %>
+
+    <div class="conatiner">
+        <div class="panel panel-primary col-sm-6 col-sm-offset-3">
+            <div class="panel-heading">评论信息:</div>
+            <div class="panel-body">
+                <form id="myform" action="/comment/submit" method="post">
+                    <div class="form-group">
+                        <label for="title">标题</label>
+                        <input type="text" name="title" id="title" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="content">内容</label>
+                        <textarea name="content" id="content" cols="30" rows="10" class="form-control"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary">提交</button>
+                        <a href="/" class="btn btn-info">返回首页</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="/javascripts/xheditor/jquery/jquery-1.11.2.min.js"></script> 
+    <script src="/javascripts/xheditor/xheditor-1.2.2.min.js"></script> 
+    <script src="/javascripts/xheditor/xheditor_lang/zh-cn.js"></script> 
+
+    <script>
+    
+        init()
+
+        function init(){
+            $.extend(XHEDITOR.settings,{
+                shortcuts:{
+                    'ctrl+enter':submitForm
+                }
+            })
+
+
+            $("#content").xheditor({
+                html5Upload:false,
+                upMultiple:'1',
+
+                upLinkUrl:'/aaaa',
+                upLinkExt:'zip,rar,txt',
+
+                upImgUrl:'/comment/uploadImg',
+                upImgExt:'jpg,jpeg,png,gif'
+            })
+
+        }
+
+        function insertUpload(arrMsg){
+            var i,msg;
+            for(i=0;i<arrMsg.length;i++){
+                msg=arrMsg[i]
+                $("#uploadList").append("<option value='"+msg.id+"'>"+msg.localname+"</option>")
+            }
+        }
+
+        function submitForm(){
+            $("#myform").submit()
+        }
+    </script>
+  </body>
+</html>

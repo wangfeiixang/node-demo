@@ -1,0 +1,202 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
+</head>
+<style>
+    html,body{
+        height: 100%;
+    }
+    body{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    #room{
+        width:500px;
+        height: 600px;
+        background: red;
+    }
+    .root-box{
+        display: flex;
+        flex-flow: column;
+        align-items: center;
+        height: 100%;
+    }
+    .root-box .panel-heading{
+        width: 100%;
+        height:46px;
+        /* flex:0 0; */
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        
+    }
+    .root-box .panel-heading p{
+        display: flex;
+        margin: 0;
+        align-items: center;
+    }
+    .root-box .panel-body{
+        width: 100%;
+        flex:1 1;
+    }
+
+    .panel-body .root-content{
+        height: 450px;
+        overflow-y: scroll;
+    }
+    .panel-body .form-group{
+        height: 70px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 0;
+        border-top: 1px solid #ccc;
+    }
+    .panel-body .form-group input{
+        width: 85%;
+    }
+
+    .list-group-item{
+        background: none;
+        border:none;
+    }
+    .list-group-item.friend{
+        display: flex;
+        justify-content: flex-start;
+    }
+    .list-group-item.me{
+        display: flex;
+        justify-content: flex-end;
+    }
+    .list-group-item.me p{
+        display: flex;
+        flex-direction: row-reverse;
+        align-items: center;
+    }
+    .list-group-item.me span:before{
+        content: ":";
+        display:inline-block;
+        margin: 0 10px;
+    }
+    .list-group-item.friend span:after{
+        content: ":";
+        display:inline-block;
+        margin: 0 10px;
+    }
+    .list-group-item.in p,.list-group-item.out p{
+        width: 100%;
+        text-align: center;
+        color: #ccc;
+        margin: 0;
+    }
+    .list-group-item.in p:after{
+        content:'进入聊天室'
+    }
+    .list-group-item.out p:after{
+        content:'退出聊天室'
+    }
+</style>
+<body>
+    
+    <div id="room">
+        <div class="panel panel-primary root-box">
+            <div class="panel-heading">
+                1708聊天室
+                <p>
+                    昵称：<input id="nick" type="text" class="form-control" style="width:80px;" value="新朋友">
+                </p>
+            </div>
+            <div class="panel-body" style="background:#f5f5f5">
+                <div class="root-content">
+                    <ul class="list-group">
+                        
+
+                    </ul>
+                </div>
+                <div class="form-group">
+                    <input type="text" placeholder="请输入聊天内容" class="form-control" id="word">
+                    <button onclick="send()" class="btn btn-success">发送</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.bootcss.com/jquery/3.2.0/jquery.min.js"></script>
+    <script src="/socket.io.js"></script>
+
+    <script>
+        var io = io.connect("http://localhost:1234/")
+        // 连接上服务之后就会触发  
+        io.on("connect", function(){
+            console.log('客户端连接上服务端了')
+            send('5689')
+        }) 
+        
+
+        io.on("disconnect", function(){
+            alert("服务已经关闭了")
+        }) 
+
+        io.on("error", function(err){
+            alert("出错了:"+JSON.stringify(err))
+        })
+
+
+        io.on("message",function(message){
+            var info = JSON.parse(message)
+            var _class = info.isMe?'me':'friend'
+            var li = '';
+            if(info.type==1){
+                li=`
+                    <li class="list-group-item in">
+                        <p>${info.nickname}</p>
+                    </li>
+                `
+            }else if(info.type==2){
+                li=`
+                    <li class="list-group-item out">
+                        <p>${info.nickname}</p>
+                    </li>
+                `
+            }else{
+                li = '<li class="list-group-item '+_class+'">'
+                    +'<p>'
+                       +' <span>'+info.nickname+'</span>'
+                        +'<button class="btn btn-info word"></button>'
+                   +' </p> </li> '
+            }
+            
+            
+            
+            var $li = $(li)
+            $li.find('.word').text(info.word)
+            $(".list-group").append($li)
+            $li[0].scrollIntoView()
+        })
+        
+        document.onkeyup = function(e){
+            if(e.keyCode==13){
+                send()
+            }
+        }
+
+        function send(word){
+            //发送数据到服务端，但是只能是字符串
+            var word = word||$("#word").val()
+            var info = {
+                nickname:$("#nick").val(),
+                word:word
+            }
+            io.send(JSON.stringify(info))
+            $("#word").val('')
+        }
+    </script>
+</body>
+</html>

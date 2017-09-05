@@ -1,0 +1,121 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="/static/css/bootstrape.css">
+</head>
+<style>
+    body{
+        padding-bottom: 50px;
+    }
+    #info-p,#btn-p{
+        display: none;
+    }
+    .good-item{
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+    }
+    .good-item img{
+        width: 80px;
+        height: 80px;
+    }
+    .goods-list{
+        padding-top:30px; 
+    }
+</style>
+<body>
+    <div class="container">
+        <h2>NODEJS - PROJECT</h2>
+        <div>
+            <p id="info-p">欢迎<span></span>回来！ <button onclick="exit()" class="btn btn-primary">注销</button></p>
+            <p id="btn-p">
+                <a href="/static/html/login.html" class="btn btn-primary">登陆</a>
+                <a href="/static/html/register.html" class="btn btn-primary">注册</a>
+            </p>
+        </div>
+        <img  src="/static/image/banner.jpg" class="center-block img-thumbnail" alt="">
+    </div>
+    <div class="container">
+        <ul class="list-group goods-list">
+            
+        </ul>
+    </div>
+
+    <script src="/static/js/jquery.js"></script>
+    <script>
+
+        checkUserInfo()
+        getGoods()
+
+        function getGoods(){
+            $.ajax({
+                url:'/api/goods',
+                success:function(data){
+                    let str = ''
+                    data.forEach(function(good) {
+                        str+=`
+                            <li class="list-group-item good-item">
+                                <img class="img-circle" src="${good.imgurl}" alt="">
+                                <div>
+                                    <p>${good.title}</p>
+                                    <p>价格：${good.price}</p>
+                                </div>
+                                <button data-id="${good.id}" class="btn btn-danger addGood">加入购物车</button>
+                            </li>
+                        `
+                    });
+                    $(".goods-list").html(str)
+                }
+            })
+        }
+
+        $(".goods-list").delegate('.addGood','click',function(){
+            if(!localStorage.user){
+                window.location.href='/static/html/login.html'
+                return false;
+            }
+
+            addGood(localStorage.user,$(this).attr('data-id'))
+
+        })
+
+        let flag = true
+        function addGood(username,goodid){
+            if(!flag){return false;}
+            flag = false
+            $.ajax({
+                url:'/api/addgood',
+                data:{
+                    username:username,
+                    goodid:goodid
+                },
+                success:function(data){
+                    console.log(data)
+                    flag = true
+                }
+            })
+        }
+
+        function exit(){
+            localStorage.removeItem('user')
+            checkUserInfo()
+        }
+
+        function checkUserInfo(){
+            var user = localStorage.user
+            $("#info-p").hide()
+            $("#btn-p").hide()
+            if(user){
+                $("#info-p").show().find('span').html(user)
+            }else{
+                $("#btn-p").show()
+            }
+        }
+    </script>
+</body>
+</html>

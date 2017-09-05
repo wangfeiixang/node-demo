@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+</html>
+<script>
+    function unique2(array){
+
+        var n ={},r=[],len=array.length,val,type;
+
+        for(var i =0;i<len;i++ ){
+            val = array[i]
+            type = typeof val
+            if( !n[val] ){
+                console.log(val, n[val] )
+                n[val] = [type]
+                r.push(val)
+            }else if( n[val].indexOf(type)<0 ){
+                n[val].push(type)
+                r.push(val)
+            }
+        }
+        
+        return r
+    }
+
+    //console.log( unique2([1,2,3,1,2,3,4,5,66,66]) )
+
+    var foo = '123'+4-'1';
+    foo += 3;
+    //console.log(  foo )
+
+    var i=0,j = 100,k=100;
+    function log(n){
+        var j = n;
+        console.log(j)
+    }
+
+    for(i;i<10;i++){
+        var k = i;
+        console.log(k)
+        log(k)
+    }
+
+   // console.log(j)
+    //console.log(k)
+    
+    
+    
+</script>

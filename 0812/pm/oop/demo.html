@@ -1,0 +1,199 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.js"></script>
+    <script>
+        $.ajax({
+            url:'http://m.maizuo.com/v4/api/film/3591?__t=1502696238780',
+            type:'get',
+            // data:{
+            //     page:1,
+            //     count:1
+            // },
+            success:function(res){
+                console.log(res)
+            }
+         })
+
+    </script>
+   <script>   
+        //单例模式  字面量模式
+        // var tv = {}
+
+        // tv.price=200
+
+        // tv.play=function(){
+        //     console.log('光头强！！')
+        // }
+    </script>
+
+
+    <script>
+        // 工厂模式
+        // function tvfactory(price){
+        //     var tv = {}
+        //     tv.price=price||200
+
+        //     tv.play=function(){
+        //         console.log('光头强！！')
+        //     }
+        //     return tv;
+        // }
+
+        // var tv1 = tvfactory()
+        // var tv2 = tvfactory()
+        // var tv3 = tvfactory()
+
+        // //问题：1.对象好像不是new出来的   2.创建出来的对象的属性和方法都是独立的，在某些情况下就会造成内存的浪费
+
+        // console.log(tv1.play)
+        // console.log(tv2.play)
+        // console.log(tv2.play==tv1.play)
+
+    </script>
+
+
+    <script>
+        //什么样子的东西才能new呢    记住，只要是函数就能new  (原生对象的方法函数不能new)
+        //函数new之后会得到一个对象 并且这个函数里给this指针挂载的属性和方法最后都会挂载在我们新生成的对象上
+
+        //构造函数 为了区分构造函数和普通函数，决定，构造函数首字母大写
+        //  function TvFactory(price){
+        //     // var this = {}
+        //     this.price=price||200
+
+        //     this.play=function(){
+        //         console.log('光头强！！')
+        //     }
+        //     // return this;
+        // }
+
+        // var tv = new TvFactory()
+        // console.log(tv)
+        // var tv1 = new TvFactory()
+
+        // console.log(tv1.play==tv.play)
+
+        //new 操作符到底做了什么
+</script>
+
+
+<script>
+    //原型  原型是属于构造函数的   原型本质就是一个对象 实例拥有一个属性  __proto__ 值是它构造函数的原型  
+    //构造函数的原型上的方法，也是就是实例的__proto__属性上的方法，实例可以直接使用
+
+    // function A(){
+
+    // }
+    // var proto = {
+    //     name:'haha'
+    // }
+    // A.prototype = proto
+
+    // var a = new A()
+    // console.log(a.__proto__.name)
+    // console.log(a.name)
+        //我们发现，可以将一些共用的属性和方法放在构造函数的原型上，这样的话实例们都可以共用，就不会浪费内存空间
+        //原型模式、混合模式
+    //    function TvFactory(price){
+    //         // var this = {}
+    //         this.price=price||200
+    //         // return this;
+    //     }
+    //     TvFactory.prototype.play=function(){
+    //         console.log('光头强！！')
+    //     }
+    //     var tv = new TvFactory()
+    //     console.log(tv)
+    //     var tv1 = new TvFactory()
+
+    //     console.log(tv1.play==tv.play)
+
+       
+</script>
+
+<script>
+    //1.对象冒充 将父类的构造函数作为之类的方法，执行完成后销毁 只能继承父类构造函数里的属性和方法
+        // function Father(){
+        //     this.firstname="王"
+        //     this.isPoor = false
+        //     this.say=function(){
+        //         alert('我很有钱！')
+        //     }
+        // }
+
+        // Father.prototype.laugh = function(){
+        //     alert('我太有钱了!!!!')
+        // }
+
+        // function Son(){
+        //     this.parent = Father
+        //     this.parent()
+        //     delete this.parent
+            
+        // }
+
+        // var son = new Son()
+        // console.log(son)
+
+
+        //2.3 call apply
+
+        // function Father(){
+        //     this.firstname="王"
+        // }
+
+        // function Son(){
+        //     // Father.call(this)
+        //     Father.apply(this)
+        // }
+        // var son = new Son()
+        
+        // console.log(son)
+
+
+        //原型继承  能将父类构造函数和原型上的方法都继承过来  缺点，容易被覆盖
+        // function Father(){
+        //     this.firstname="王"
+        // }
+        // Father.prototype.lastname="狗子"
+        // function Son(){
+        //     this.firstname = '李'
+        // }
+        // Son.prototype = new Father()
+        // var son = new Son()
+        // console.log(son)
+
+        //原型链: 每一个对象都有__proto__的属性，值指向 的是构造函数的原型，构造函数的原型也是一个对象，它也可能有__proto__指向它构造函数的原型
+        //原型链的属性和方法，对象都可以使用
+
+        //混合继承  将父类原型上的属性继承到子类原型上，父类构造函数的属性和方法继承到子类的构造函数里
+        function Father(){
+            this.firstname="王"
+        }
+        Father.prototype.lastname="狗子"
+       // console.log(new Father())
+        function Son(){
+            Father.call(this)
+        }
+
+        // for(var key in Father.prototype){
+        //     Son.prototype[key]= Father.prototype[key]
+        // }
+        Object.assign(Son.prototype,Father.prototype)
+        Son.prototype.lastname = '李'
+        var son = new Son()
+        //console.log(son)
+
+        //使用顺序  自身构造器-》自身原型-》父类构造器->父类原型->....Object
+</script>
+</body>
+</html>

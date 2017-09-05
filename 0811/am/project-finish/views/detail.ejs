@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/bootstrap.css' />
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <style>
+    
+  </style>
+  <body>
+
+    <%- include('header') %>
+    <div class="container">
+        <a href="/comment">去评论</a>
+        <a href="/comment/list">查看评论列表</a>
+        <a href="/">返回首页</a>
+        <% if(flag){ %>
+            <div class="panel panel-primary content">
+                
+
+
+                    <div class="panel-heading clearfix">
+                        <%= comment.title %>
+
+                        <% if(comment.username==username){ %>
+                            <a href="/comment/delete?id=<%= comment.id %>" class="btn btn-danger pull-right">删除</a>
+                        <% }else{ %>
+                            <button disabled class="btn btn-danger pull-right">无权限操作</button>
+                        <% } %>
+
+                    </div>
+                    <div class="panel-body">
+                        <p class="text-info">
+                            作者：<%= comment.title %>&nbsp;&nbsp;
+                            时间：<%= comment.time %>
+                        </p>
+                        <%- comment.content %>
+                    </div>
+
+
+                
+            </div>
+        <% }else{ %>
+            <div class="alert alert-danger">评论信息不存在</div>
+        <% } %>
+     </div>
+
+  </body>
+</html>

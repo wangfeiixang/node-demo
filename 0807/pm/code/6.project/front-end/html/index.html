@@ -1,0 +1,70 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    
+    <link rel="stylesheet" type="text/css" href="/static/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/a.css">
+</head>
+<body>
+
+    <div class="container">
+        <h1>hello world</h1>
+        <img src="/static/image/star.jpg" class="img-thumbnail" alt="">
+        <ul class="list-group">
+            <!-- <li class="list-group-item"></li> -->
+        </ul>
+    </div>
+
+
+    <script src="/static/js/jquery.js"></script>
+    <script>
+        var url = '/api/list'
+        $.ajax({
+            url:url,
+            success:function(data){
+                var str = ''
+                data.forEach(function(item,i){
+                    str+='<li class="list-group-item">'+item.title+'</li>'
+                });
+
+                $("ul").html(str)
+            }
+        })
+    </script>
+</body>
+</html>
+<script>
+            var length=10;
+          //  console.log( "a" in window )
+            if( "a" in window){
+                var a =length;
+                var fn1 = function(){
+                    console.log(this.length);
+                }
+            }
+            
+            function fn2(){
+                console.log(this.length);
+            }
+            
+            var obj = {
+                length:5,
+                objFn:fn1,
+                method:function(fn){
+                    console.log('正在运行',fn,arguments[0])
+                    fn();
+                    arguments[0]();
+                }
+            };
+            
+            console.log(a);//10
+            obj.objFn();//5
+            obj.method(fn2,obj.length,1);// 5,1
+
+            
+</script>

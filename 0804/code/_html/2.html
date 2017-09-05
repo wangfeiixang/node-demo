@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title></title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    </head>
+    <body>
+        <ul>
+            <li>1</li>
+            <li>2</li>
+            <li>3</li>
+            <li>4</li>
+            <li class="click">5</li>
+        </ul>
+    </body>
+</html>
+<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+
+<script>
+    $(function(){
+
+       
+        $("ul li").each((i,val)=>{
+             console.log( $(val).html() )
+        })
+
+        
+        
+        $(".click").click(()=>{
+
+              setTimeout((cb)=>{
+
+                console.log('我是延时器',cb)
+
+                
+
+            },1000)
+        })
+        const getData = ()=>{
+            console.log('数据')
+        }
+
+    })
+    
+</script>

@@ -1,0 +1,72 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title></title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    </head>
+    <body>
+    
+    </body>
+</html>
+<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.js"></script>
+<script>
+    // (function(){
+    //     window.location.href="https://www.baidu.com"
+    // })()
+
+    var o1 = { a:'1' };
+    var o2 = { b:'2' };
+    // var o3 = { a:'a', b:'b' }
+
+    //var o3 = $.extend(o1, o2)
+    
+    var o3 = $.extend({}, o1, o2)
+
+   // console.log(o3)
+
+     // 合并对象
+    function extend(target, source) {
+        for (var obj in source) {
+            target[obj] = source[obj];
+        }
+        return target;
+    }
+
+    // 测试
+    var a = {a: 1, b: 2};
+    var b = {a: 2, b: 3, c: 4};
+
+    //var c = extend(a, b);
+    var c = Object.assign(a,b)
+    console.log(c);
+
+    
+    //1.$extend(obj1,obj2) 或者 $extend({},obj1,obj2)
+    //2.object.assign
+    //3.for in 循环，判断当前属性是否是对象的属性
+    //hasOwnProperty
+
+
+
+
+
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</script> 

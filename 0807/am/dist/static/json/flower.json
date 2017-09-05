@@ -1,0 +1,51 @@
+
+	{
+		"flower":{
+				"logo":"static/img/all_cla_ban_business flower.jpg",
+				"title":"鲜花",
+				"list":[
+							{"src":"./static/img/more_btn.png","name":"更多"},
+							{"src":"./static/img/rose.png","name":"玫瑰"},
+							{"src":"./static/img/redrose.png","name":"红玫瑰"},
+							{"src":"./static/img/ruishilian.png","name":"瑞士莲"},
+							{"src":"./static/img/shengxiao.png","name":"生效"},
+							{"src":"./static/img/taiwan.png","name":"台湾"},
+							{"src":"./static/img/tesehuali.png","name":"特色"},
+							{"src":"./static/img/wishes.png","name":"祝愿"},
+							{"src":"./static/img/wutang.png","name":"无糖"}
+						]
+				},
+		"gift":{
+				"logo":"static/img/all_cla_ban_cake.jpg",
+				"title":"礼物",
+				"list":[
+							{"src":"./static/img/more_btn.png","name":"更多"},
+							{"src":"./static/img/xiangrikui.png","name":"向日葵"},
+							{"src":"./static/img/zhangbei.png","name":"香薰"},
+							{"src":"./static/img/zhushou.png","name":"助手"},
+							{"src":"./static/img/yujinxiang.png","name":"郁金香"},
+							{"src":"./static/img/youqing.png","name":"友情"},
+							{"src":"./static/img/yellowrose.png","name":"黄玫瑰"},
+							{"src":"./static/img/yongshenghua.png","name":"永生花"},
+							{"src":"./static/img/xunyicao.png","name":"薰衣草"}
+						]
+				},
+		"oldman":{
+				"logo":"static/img/all_cla_ban_freflowers.jpg",
+				"title":"送长辈",
+				"list":[
+							{"src":"./static/img/more_btn.png","name":"更多"},
+							{"src":"./static/img/youqing.png","name":"友情"},
+							{"src":"./static/img/yellowrose.png","name":"黄玫瑰"},
+							{"src":"./static/img/yongshenghua.png","name":"永生花"},
+							{"src":"./static/img/xunyicao.png","name":"薰衣草"},
+							{"src":"./static/img/xianhualilan.png","name":"鲜花礼篮"},
+							{"src":"./static/img/qingren.png","name":"情人"},
+							{"src":"./static/img/qiaoluo.png","name":"乔楼"},
+							{"src":"./static/img/oushi.png","name":"欧式"}
+						]
+				}
+		
+		
+	}
+
